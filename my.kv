@@ -1,0 +1,65 @@
+<CreateAccountWindow>:
+    name: 'create'
+    namee: namee
+    email: email
+    password: passw
+
+    FloatLayout:
+        size: root.width, root.height/2
+
+    Label:
+        text: 'Create an Account'
+        size_hint: .8, .2
+        pos_hint: {'x':.1, 'top': 1}
+        font_size: (root.width**2 + root.height**2) / 14**4
+
+    TextInput:
+        id: namee
+        multiline: False
+        font_size: (root.width**2 + root.height**2) / 14**4
+
+    Button:
+        text: 'Submit'
+        on_release:
+            root.manager.transition.direction = 'left'
+            root.submit()
+
+<LoginWindow>
+    name: 'login'
+    email: email
+    password: password
+
+    TextInput:
+        id: email
+        password: False
+
+    Button:
+        text: 'Login'
+        on_release:
+            root.manager.transition.direction = 'up'
+            root.login_btn()
+
+    Button:
+        text: 'Don't have an account? Sign in!'
+        on_release:
+            root.manager.transition.direction = 'right'
+            root.create_btn()
+
+<MainWindow>:
+    n:n
+    email: email
+    created: created
+
+    Label:
+        id: n
+        text: 'Account Name: '
+
+    Label:
+        id: created
+        text: 'Created: '
+
+    Button:
+        text: 'Logout'
+        on_release:
+            app.root.current = 'login'
+            root.manager.transition.direction = 'down'
