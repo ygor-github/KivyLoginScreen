@@ -4,9 +4,8 @@ import bcrypt
 class DataBase:
     def __init__(self, filename):
         self.filename = filename
-        self.users = None
+        self.users = {}
         self.file = None
-        self.load()
     
     def load(self):
         try:
@@ -21,15 +20,16 @@ class DataBase:
         self.file.close()
     
     def get_user(self, email):
-        return self.users.get(email, -1)
+        
+        return self.users.get(email, None)
     
     def add_user(self, email, password, name):
         if email.strip() not in self.users:
             hashed_password = bcrypt.hashpw(password.strip().encode(), bcrypt.gensalt()).decode()
             self.users[email.strip()] = (
                 hashed_password.strip(),
-                name.strp(),
-                DataBase.get_date()
+                name.strip(),
+                self.get_date()
             )
             self.save()
             return 1
@@ -39,7 +39,7 @@ class DataBase:
     
     def validate(self, email, password):
         if self.get_user(email) != -1:
-            return bcrypt.checkpw(password.econde(), self.users[email][0].encode())
+            return bcrypt.checkpw(password.encode(), self.users[email][0].encode())
         else:
             return False
     
